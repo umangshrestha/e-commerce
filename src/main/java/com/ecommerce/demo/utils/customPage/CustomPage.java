@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 public class CustomPage<T> {
     @JsonView(CustomPageView.Default.class)
-    private List<T> categories;
+    private List<T> data;
     @JsonView(CustomPageView.Default.class)
     private String nextPageUrl;
     @JsonView(CustomPageView.Default.class)
@@ -20,7 +20,7 @@ public class CustomPage<T> {
     private Long totalCount;
 
     public CustomPage(Page<T> page, String baseUrl) {
-        this.categories = page.getContent();
+        this.data = page.getContent();
         this.totalCount = page.getTotalElements();
         if (page.hasPrevious())
             this.lastPageUrl = buildPageUrl(page.getNumber() - 1, page.getSize(), baseUrl);

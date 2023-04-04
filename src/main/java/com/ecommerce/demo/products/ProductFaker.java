@@ -1,12 +1,11 @@
-package com.ecommerce.demo.utils.fakerService;
+package com.ecommerce.demo.products;
 
-import com.ecommerce.demo.products.Product;
 import com.github.javafaker.Faker;
 
-public class ProductFakerService {
+public class ProductFaker {
     private final Faker faker;
 
-    public ProductFakerService() {
+    public ProductFaker() {
         this.faker = new Faker();
     }
 

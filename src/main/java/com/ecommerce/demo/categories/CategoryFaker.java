@@ -1,16 +1,15 @@
-package com.ecommerce.demo.utils.fakerService;
+package com.ecommerce.demo.categories;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import com.ecommerce.demo.categories.Category;
 import com.github.javafaker.Faker;
 
-public class CategoryFakerService {
+public class CategoryFaker {
     private final Faker faker;
     private final Set<String> usednames;
 
-    public CategoryFakerService() {
+    public CategoryFaker() {
         this.faker = new Faker();
         this.usednames = new HashSet<>();
     }

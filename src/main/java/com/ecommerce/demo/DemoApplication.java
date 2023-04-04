@@ -8,11 +8,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import com.ecommerce.demo.categories.Category;
+import com.ecommerce.demo.categories.CategoryFaker;
 import com.ecommerce.demo.categories.CategoryRepository;
 import com.ecommerce.demo.products.Product;
+import com.ecommerce.demo.products.ProductFaker;
 import com.ecommerce.demo.products.ProductRepository;
-import com.ecommerce.demo.utils.fakerService.CategoryFakerService;
-import com.ecommerce.demo.utils.fakerService.ProductFakerService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,11 +22,6 @@ public class DemoApplication {
 	@Value("${seeding.count:10}")
 	int count;
 
-	@Autowired
-	CategoryRepository categoryRepository;
-	@Autowired
-	ProductRepository productRepository;
-
 	private static final Logger logger = LoggerFactory.getLogger(DemoApplication.class);
 
 	public static void main(String[] args) {
@@ -34,10 +29,10 @@ public class DemoApplication {
 	}
 
 	@Bean
-	CommandLineRunner commandLineRinner() {
+	CommandLineRunner commandLineRinner(CategoryRepository categoryRepository, ProductRepository productRepository) {
 		return args -> {
-			CategoryFakerService categoryFaker = new CategoryFakerService();
-			ProductFakerService productFaker = new ProductFakerService();
+			CategoryFaker categoryFaker = new CategoryFaker();
+			ProductFaker productFaker = new ProductFaker();
 			for (int i = 0; i < count && categoryRepository.count() < count; i++) {
 				Category category = categoryFaker.getCategory();
 				logger.info("[SEEDING] Category: {}, Count: {}", category, categoryRepository.count());

@@ -3,9 +3,8 @@ package com.ecommerce.demo.categories;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.ecommerce.demo.categories.CategoryView.Public;
-import com.ecommerce.demo.categories.CategoryView.WithProducts;
 import com.ecommerce.demo.products.Product;
+import com.ecommerce.demo.products.ProductView;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import jakarta.persistence.CascadeType;
@@ -28,25 +27,25 @@ import lombok.ToString;
 @Table(name = "categories")
 public class Category {
     @Id
-    @JsonView(Public.class)
+    @JsonView({ CategoryView.Public.class, ProductView.Public.class })
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank
-    @JsonView(Public.class)
+    @JsonView({ CategoryView.Public.class, ProductView.Public.class })
     @Column(unique = true)
     private String name;
 
     @Size(max = 255)
-    @JsonView(Public.class)
+    @JsonView(CategoryView.Public.class)
     private String description;
 
     @Column(name = "created_at", updatable = false)
-    @JsonView(Public.class)
+    @JsonView(CategoryView.Public.class)
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
-    @JsonView(Public.class)
+    @JsonView(CategoryView.Public.class)
     private LocalDateTime updatedAt;
 
     @PrePersist
@@ -61,7 +60,7 @@ public class Category {
     }
 
     @ToString.Exclude
-    @JsonView(WithProducts.class)
+    @JsonView(CategoryView.WithProducts.class)
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private List<Product> products;
 

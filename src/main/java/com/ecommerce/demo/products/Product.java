@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import com.ecommerce.demo.categories.Category;
 import com.ecommerce.demo.categories.CategoryView;
+import com.ecommerce.demo.users.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -64,14 +65,19 @@ public class Product {
     private Boolean isDeleted = false;
 
     @Column(name = "deleted_at")
-    @JsonIgnore
+    @JsonView(ProductView.WithDeleteDate.class)
     private LocalDateTime deletedAt;
 
     @ToString.Exclude
-    @JsonView(ProductView.WithDeleteDate.class)
+    @JsonView(ProductView.Public.class)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @PrePersist
     protected void onCreate() {
